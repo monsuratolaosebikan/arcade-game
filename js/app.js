@@ -1,36 +1,55 @@
 // Enemies our player must avoid
 var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+    // The image/sprite for our enemies
     this.sprite = 'images/enemy-bug.png';
+    // ensures enemy smoothly transitions into frame
+    this.x = -100;
+    // creates a random speed for each new enemy
+    this.speed = Math.floor(Math.random()*200) + 80;
+    // designates a random row for each enemy to move in
+    var randomPosition = Math.floor(Math.random()*3) + 1;
+    if (randomPosition == 1) {
+        this.y = 220;
+    }
+    else if (randomPosition == 2) {
+        this.y = 140;
+    }
+    else {
+        this.y = 60; 
+    }
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+    this.checkCollision();
+    this.y = this.y;
+    if (this.x < 510) {
+        this.x = this.x + this.speed * dt;
+    }
+    else {
+        this.x = -100;
+    }
 };
 
-// Draw the enemy on the screen, required method for game
+// Draws the enemy on the screen
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// Checks whether or not the player has collided with the enemy
+Enemy.prototype.checkCollision = function () {
+    if(this.x < player.x + 70  && this.x + 70  > player.x && this.y < player.y + 60 && this.y + 60 > player.y) {
+        player.x = 200;
+        player.y = 400;
+    }
+};
+
 var Player = function() {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 200;
     this.y = 400;
 };
 
-Player.prototype.update = function() {
+Player.prototype.update = function(dt) {
     this.x = this.x;
     this.y = this.y;
 };
@@ -54,6 +73,7 @@ Player.prototype.handleInput = function(key) {
                 //reset player
                 this.x = 200;
                 this.y = 400;
+                alert("You won!");
             }
             break;
         case "right":
@@ -70,17 +90,15 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+var allEnemies = [];
+for (var i = 0; i < 4; i++) {
+    allEnemies.push(new Enemy());
+}
 
 var player = new Player();
 
-
-
-
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// Listens for key presses and sends the keys to the
+//Player.handleInput() method
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
