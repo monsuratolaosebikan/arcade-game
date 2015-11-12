@@ -4,19 +4,10 @@ var Enemy = function() {
     this.sprite = 'images/enemy-bug.png';
     // ensures enemy smoothly transitions into frame
     this.x = -100;
-    // creates a random speed for each new enemy
-    this.speed = Math.floor(Math.random()*200) + 80;
     // designates a random row for each enemy to move in
-    var randomPosition = Math.floor(Math.random()*3) + 1;
-    if (randomPosition == 1) {
-        this.y = 220;
-    }
-    else if (randomPosition == 2) {
-        this.y = 140;
-    }
-    else {
-        this.y = 60; 
-    }
+    this.y = this.randomRow();
+    // creates a random speed for each new enemy
+    this.speed = this.randomSpeed();
 };
 
 Enemy.prototype.update = function(dt) {
@@ -27,6 +18,8 @@ Enemy.prototype.update = function(dt) {
     }
     else {
         this.x = -100;
+        this.y = this.randomRow();
+        this.speed = this.randomSpeed();
     }
 };
 
@@ -44,6 +37,25 @@ Enemy.prototype.checkCollision = function () {
     }
 };
 
+Enemy.prototype.randomRow = function() {
+    var randomPosition = Math.floor(Math.random()*3) + 1;
+    var y;
+    if (randomPosition == 1) {
+        y = 220;
+    }
+    else if (randomPosition == 2) {
+        y = 140;
+    }
+    else {
+        y = 60; 
+    }
+    return y;
+};
+
+Enemy.prototype.randomSpeed = function() {
+    return Math.floor(Math.random()*200) + 80;
+};
+
 var Player = function() {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 200;
@@ -51,7 +63,7 @@ var Player = function() {
     this.score = 0;
 };
 
-Player.prototype.update = function(dt) {
+Player.prototype.update = function() {
     this.x = this.x;
     this.y = this.y;
 };
@@ -63,7 +75,7 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(key) {
     switch(key) {
         case "left":
-            if(this.x != 0){
+            if(this.x !== 0){
                 this.x -= 100;
             }
             break;
