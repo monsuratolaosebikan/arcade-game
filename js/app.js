@@ -33,7 +33,14 @@ Enemy.prototype.checkCollision = function () {
     if(this.x < player.x + 70  && this.x + 70  > player.x && this.y < player.y + 60 && this.y + 60 > player.y) {
         player.x = 200;
         player.y = 400;
-        player.score = 0;
+        if(player.lives == 1) {
+            player.score = 0;
+            player.lives = 3;
+        }
+        else {
+            player.lives -= 1;
+        }
+        player.updateStats();
     }
 };
 
@@ -61,6 +68,7 @@ var Player = function() {
     this.x = 200;
     this.y = 400;
     this.score = 0;
+    this.lives = 3;
 };
 
 Player.prototype.update = function() {
@@ -70,6 +78,11 @@ Player.prototype.update = function() {
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Player.prototype.updateStats = function() {
+    document.getElementById("score").innerHTML = "&nbsp" + player.score;
+    document.getElementById("lives").innerHTML = "&nbsp" + player.lives;
 };
 
 Player.prototype.handleInput = function(key) {
@@ -88,6 +101,7 @@ Player.prototype.handleInput = function(key) {
                 this.x = 200;
                 this.y = 400;
                 this.score += 10;
+                this.updateStats();
             }
             break;
         case "right":
