@@ -40,6 +40,7 @@ Enemy.prototype.checkCollision = function () {
     if(this.x < player.x + 70  && this.x + 70  > player.x && this.y < player.y + 60 && this.y + 60 > player.y) {
         player.x = 200;
         player.y = 400;
+        player.score = 0;
     }
 };
 
@@ -47,6 +48,7 @@ var Player = function() {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 200;
     this.y = 400;
+    this.score = 0;
 };
 
 Player.prototype.update = function(dt) {
@@ -73,7 +75,7 @@ Player.prototype.handleInput = function(key) {
                 //reset player
                 this.x = 200;
                 this.y = 400;
-                alert("You won!");
+                this.score += 10;
             }
             break;
         case "right":
