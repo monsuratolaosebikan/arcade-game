@@ -1,3 +1,27 @@
 body {
-    text-align: center;
+    background-color: #a9a9a9;
+    color: white;
+    margin-left: 30%;
 }
+
+.stats {
+	width: 505px;
+	text-align: center;
+	position: absolute;
+}
+
+.stats li {
+	display: inline;
+	font-size: 20px;
+} 
+
+.fa-heart {
+	color: red;
+}
+
+.fa-star {
+	color: yellow;
+}
+
+
+
