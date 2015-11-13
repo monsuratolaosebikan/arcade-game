@@ -2,10 +2,20 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Effective JavaScript: Frogger</title>
+    <title>Frogger Clone</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	<div class="game-board">
+		<div class="stats">
+			<ul>
+				<li><i class="fa fa-bug"></i><span id="frog"> BugHop by Monsurat O. - </li>
+		        <li><i class="fa fa-heart"></i><span id="lives"> 3 </span> lives </li>
+		        <li><i class="fa fa-star"></i><span id="score"> 0 </span> points</li>
+			</ul>
+		</div>
+	</div>
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
